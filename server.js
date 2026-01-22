@@ -11,11 +11,12 @@ const PORT = process.env.PORT || 3000;
 
 // Configuration Dropbox
 const DROPBOX_CONFIG = {
-  appKey: process.env.DROPBOX_APP_KEY || "REMPLACE_PAR_TON_APP_KEY",
+  appKey: process.env.DROPBOX_APP_KEY || "REMPLACE_PAR_TON_APP_KEY", //à remplacer seulement en local
   appSecret: process.env.DROPBOX_APP_SECRET || "REMPLACE_PAR_TON_APP_SECRET",
-  refreshToken: process.env.DROPBOX_REFRESH_TOKEN || "REMPLACE_PAR_TON_REFRESH_TOKEN",
+  refreshToken:
+    process.env.DROPBOX_REFRESH_TOKEN || "REMPLACE_PAR_TON_REFRESH_TOKEN",
   useSharedFolder: false,
-  sharedFolderId: "",,
+  sharedFolderId: "",
   uploadPath: "/Transfert Dropbox", // ⚠️ Dossier "test" à la racine
 };
 
