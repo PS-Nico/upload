@@ -20,6 +20,21 @@ const DROPBOX_CONFIG = {
   uploadPath: "/Transfert Dropbox", // ⚠️ Dossier "test" à la racine
 };
 
+// Debug - vérifie que les variables sont chargées
+console.log("🔍 Vérification des variables d'environnement:");
+console.log(
+  "DROPBOX_APP_KEY:",
+  process.env.DROPBOX_APP_KEY ? "✅ Défini" : "❌ Non défini",
+);
+console.log(
+  "DROPBOX_APP_SECRET:",
+  process.env.DROPBOX_APP_SECRET ? "✅ Défini" : "❌ Non défini",
+);
+console.log(
+  "DROPBOX_REFRESH_TOKEN:",
+  process.env.DROPBOX_REFRESH_TOKEN ? "✅ Défini" : "❌ Non défini",
+);
+
 let accessToken = null;
 let tokenExpiry = null;
 
