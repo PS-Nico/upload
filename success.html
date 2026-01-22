@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Transfert réussi !</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+    </head>
+    <body
+        class="bg-gradient-to-br from-green-50 to-blue-100 min-h-screen flex items-center justify-center p-6"
+    >
+        <div class="max-w-2xl w-full">
+            <div
+                class="bg-white rounded-2xl shadow-2xl p-8 md:p-12 text-center"
+            >
+                <!-- Icône de succès animée -->
+                <div class="mb-6">
+                    <div
+                        class="mx-auto w-24 h-24 bg-green-100 rounded-full flex items-center justify-center animate-bounce"
+                    >
+                        <svg
+                            class="w-12 h-12 text-green-600"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="3"
+                                d="M5 13l4 4L19 7"
+                            />
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Message principal -->
+                <h1 class="text-4xl font-bold text-gray-800 mb-4">
+                    Transfert réussi !
+                </h1>
+
+                <p class="text-xl text-gray-600 mb-8">
+                    Vos fichiers ont été transférés avec succès vers Dropbox
+                </p>
+
+                <!-- Informations du transfert -->
+                <div
+                    id="transferInfo"
+                    class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-6 mb-8"
+                >
+                    <div class="space-y-3 text-left">
+                        <div class="flex items-center space-x-3">
+                            <svg
+                                class="w-5 h-5 text-indigo-600 flex-shrink-0"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                                />
+                            </svg>
+                            <div class="flex-1">
+                                <p class="text-sm text-gray-600">
+                                    Archive créée
+                                </p>
+                                <p
+                                    id="archiveName"
+                                    class="font-semibold text-gray-800"
+                                >
+                                    ...
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center space-x-3">
+                            <svg
+                                class="w-5 h-5 text-indigo-600 flex-shrink-0"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"
+                                />
+                            </svg>
+                            <div class="flex-1">
+                                <p class="text-sm text-gray-600">
+                                    Nombre de fichiers
+                                </p>
+                                <p
+                                    id="filesCount"
+                                    class="font-semibold text-gray-800"
+                                >
+                                    ...
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center space-x-3">
+                            <svg
+                                class="w-5 h-5 text-indigo-600 flex-shrink-0"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4"
+                                />
+                            </svg>
+                            <div class="flex-1">
+                                <p class="text-sm text-gray-600">
+                                    Taille totale
+                                </p>
+                                <p
+                                    id="totalSize"
+                                    class="font-semibold text-gray-800"
+                                >
+                                    ...
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Message d'information -->
+                <div
+                    class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-8"
+                >
+                    <div class="flex items-start space-x-3">
+                        <svg
+                            class="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                            />
+                        </svg>
+                        <p class="text-sm text-blue-800 text-left">
+                            Votre projet a été archivé et envoyé. Vous recevrez
+                            une confirmation par email une fois le traitement
+                            terminé.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Boutons d'action -->
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a
+                        href="/upload.html"
+                        class="inline-flex items-center justify-center px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all"
+                    >
+                        <svg
+                            class="w-5 h-5 mr-2"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                            />
+                        </svg>
+                        Envoyer un autre projet
+                    </a>
+
+                    <button
+                        onclick="closeTab()"
+                        class="inline-flex items-center justify-center px-6 py-3 bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold rounded-lg transition-all"
+                    >
+                        <svg
+                            class="w-5 h-5 mr-2"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12"
+                            />
+                        </svg>
+                        Fermer l'onglet
+                    </button>
+                </div>
+
+                <!-- Footer -->
+                <div class="mt-8 pt-6 border-t border-gray-200">
+                    <p class="text-sm text-gray-500">
+                        Une question ? Contactez-nous à
+                        <a
+                            href="mailto:support@example.com"
+                            class="text-indigo-600 hover:text-indigo-800 underline"
+                            >support@example.com</a
+                        >
+                    </p>
+                </div>
+            </div>
+
+            <!-- Confetti animation (optionnel) -->
+            <div id="confetti" class="fixed inset-0 pointer-events-none"></div>
+        </div>
+
+        <script>
+            // Récupérer les informations de l'upload depuis l'URL
+            const params = new URLSearchParams(window.location.search);
+            const archiveName = params.get("archive") || "Archive ZIP";
+            const filesCount = params.get("files") || "0";
+            const totalSize = params.get("size") || "0 MB";
+
+            // Afficher les informations
+            document.getElementById("archiveName").textContent = archiveName;
+            document.getElementById("filesCount").textContent =
+                filesCount + " fichier(s)";
+            document.getElementById("totalSize").textContent = totalSize;
+
+            // Fonction pour fermer l'onglet
+            function closeTab() {
+                // Essayer de fermer l'onglet
+                window.close();
+
+                // Si window.close() ne fonctionne pas (onglet non ouvert par JavaScript)
+                // Proposer une alternative après un court délai
+                setTimeout(() => {
+                    // Vérifier si l'onglet est toujours ouvert
+                    if (!window.closed) {
+                        // Rediriger vers une page blanche ou l'accueil
+                        if (
+                            confirm(
+                                "Impossible de fermer automatiquement l'onglet.\nVoulez-vous retourner à la page d'accueil ?",
+                            )
+                        ) {
+                            window.location.href = "/upload.html";
+                        }
+                    }
+                }, 100);
+            }
+
+            // Animation confetti simple (optionnel)
+            function createConfetti() {
+                const confettiContainer = document.getElementById("confetti");
+                const colors = [
+                    "#4F46E5",
+                    "#10B981",
+                    "#F59E0B",
+                    "#EF4444",
+                    "#8B5CF6",
+                ];
+
+                for (let i = 0; i < 50; i++) {
+                    const confetti = document.createElement("div");
+                    confetti.style.position = "absolute";
+                    confetti.style.width = "10px";
+                    confetti.style.height = "10px";
+                    confetti.style.backgroundColor =
+                        colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.left = Math.random() * 100 + "%";
+                    confetti.style.top = "-10px";
+                    confetti.style.opacity = "0";
+                    confetti.style.borderRadius = "50%";
+                    confetti.style.animation = `fall ${Math.random() * 3 + 2}s linear`;
+
+                    confettiContainer.appendChild(confetti);
+
+                    setTimeout(() => confetti.remove(), 5000);
+                }
+            }
+
+            // Ajouter l'animation CSS
+            const style = document.createElement("style");
+            style.textContent = `
+                @keyframes fall {
+                    0% {
+                        transform: translateY(0) rotate(0deg);
+                        opacity: 1;
+                    }
+                    100% {
+                        transform: translateY(100vh) rotate(360deg);
+                        opacity: 0;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+
+            // Lancer les confettis au chargement
+            window.addEventListener("load", () => {
+                createConfetti();
+            });
+        </script>
+    </body>
+</html>
