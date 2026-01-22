@@ -21,12 +21,6 @@
                         Transférez vos fichiers directement vers Dropbox (max 3
                         GB par fichier)
                     </p>
-                    <button
-                        onclick="testConnection()"
-                        class="mt-3 text-sm text-indigo-600 hover:text-indigo-800 underline"
-                    >
-                        Tester la connexion à Dropbox
-                    </button>
                 </div>
 
                 <!-- Charte de livrables audio -->
@@ -1234,6 +1228,7 @@
                     });
 
                     xhr.open("POST", `${API_URL}/upload`);
+                    xhr.timeout = 600000; // 10 minutes timeout
                     xhr.send(formData);
                     const data = await uploadPromise;
 
@@ -1280,23 +1275,6 @@
                     isUploading = false;
                     uploadBtn.disabled = false;
                     updateFileList();
-                }
-            }
-
-            async function testConnection() {
-                try {
-                    const response = await fetch(`${API_URL}/test-connection`);
-                    const data = await response.json();
-                    alert(
-                        data.success
-                            ? "✅ Connexion à Dropbox réussie !\n" +
-                                  data.message
-                            : "❌ " + data.message,
-                    );
-                } catch (error) {
-                    alert(
-                        "❌ Erreur: Impossible de se connecter au serveur backend",
-                    );
                 }
             }
 

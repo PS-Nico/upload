@@ -11,35 +11,29 @@ const PORT = process.env.PORT || 3000;
 
 // Configuration Dropbox
 const DROPBOX_CONFIG = {
-  appKey: process.env.DROPBOX_APP_KEY || "REMPLACE_PAR_TON_APP_KEY", //à remplacer seulement en local
+  appKey: process.env.DROPBOX_APP_KEY || "REMPLACE_PAR_TON_APP_KEY",
   appSecret: process.env.DROPBOX_APP_SECRET || "REMPLACE_PAR_TON_APP_SECRET",
   refreshToken:
     process.env.DROPBOX_REFRESH_TOKEN || "REMPLACE_PAR_TON_REFRESH_TOKEN",
   useSharedFolder: false,
   sharedFolderId: "",
-  uploadPath: "/Transfert Dropbox", // ⚠️ Dossier "test" à la racine
+  uploadPath: "/test",
 };
-
-// Debug - vérifie que les variables sont chargées
-console.log("🔍 Vérification des variables d'environnement:");
-console.log(
-  "DROPBOX_APP_KEY:",
-  process.env.DROPBOX_APP_KEY ? "✅ Défini" : "❌ Non défini",
-);
-console.log(
-  "DROPBOX_APP_SECRET:",
-  process.env.DROPBOX_APP_SECRET ? "✅ Défini" : "❌ Non défini",
-);
-console.log(
-  "DROPBOX_REFRESH_TOKEN:",
-  process.env.DROPBOX_REFRESH_TOKEN ? "✅ Défini" : "❌ Non défini",
-);
 
 let accessToken = null;
 let tokenExpiry = null;
 
+// Augmenter les timeouts
 app.use(cors());
-app.use(express.json());
+app.use(express.json({ limit: "4gb" }));
+app.use(express.urlencoded({ limit: "4gb", extended: true }));
+
+// Timeout de 10 minutes pour les requêtes
+app.use((req, res, next) => {
+  req.setTimeout(600000); // 10 minutes
+  res.setTimeout(600000);
+  next();
+});
 
 // Servir les fichiers statiques (HTML, CSS, JS)
 app.use(express.static(__dirname));
@@ -49,7 +43,7 @@ app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "upload.html"));
 });
 
-// Configuration Multer
+// Configuration Multer avec limite augmentée
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     const uploadDir = "./uploads";
@@ -65,7 +59,10 @@ const storage = multer.diskStorage({
 
 const upload = multer({
   storage: storage,
-  limits: { fileSize: 3 * 1024 * 1024 * 1024 },
+  limits: {
+    fileSize: 3 * 1024 * 1024 * 1024, // 3 GB
+    files: 50, // Max 50 fichiers
+  },
 });
 
 // Renouveler le token Dropbox
@@ -142,11 +139,15 @@ app.get("/test-connection", async (req, res) => {
   }
 });
 
-// Upload vers Dropbox
+// Upload vers Dropbox avec meilleure gestion des chunks
 async function uploadToDropbox(filePath, fileName, token) {
-  const CHUNK_SIZE = 150 * 1024 * 1024;
+  const CHUNK_SIZE = 100 * 1024 * 1024; // 100 MB par chunk
   const fileSize = fs.statSync(filePath).size;
   const dropboxPath = `${DROPBOX_CONFIG.uploadPath}/${fileName}`;
+
+  console.log(
+    `📤 Upload de ${fileName} (${(fileSize / 1024 / 1024).toFixed(2)} MB)`,
+  );
 
   if (fileSize <= CHUNK_SIZE) {
     const fileContent = fs.readFileSync(filePath);
@@ -166,18 +167,30 @@ async function uploadToDropbox(filePath, fileName, token) {
           }),
         },
         body: fileContent,
+        timeout: 600000, // 10 minutes timeout
       },
     );
 
+    if (!response.ok) {
+      throw new Error(`Erreur Dropbox: ${response.statusText}`);
+    }
+
     return await response.json();
   } else {
+    // Upload par chunks pour les gros fichiers
     const fileStream = fs.createReadStream(filePath, {
       highWaterMark: CHUNK_SIZE,
     });
     let sessionId = null;
     let offset = 0;
+    let chunkNumber = 0;
 
     for await (const chunk of fileStream) {
+      chunkNumber++;
+      console.log(
+        `  📦 Chunk ${chunkNumber} - ${(offset / 1024 / 1024).toFixed(2)} MB uploadés`,
+      );
+
       if (!sessionId) {
         const startResponse = await fetch(
           "https://content.dropboxapi.com/2/files/upload_session/start",
@@ -188,12 +201,20 @@ async function uploadToDropbox(filePath, fileName, token) {
               "Content-Type": "application/octet-stream",
             },
             body: chunk,
+            timeout: 600000,
           },
         );
+
+        if (!startResponse.ok) {
+          throw new Error(
+            `Erreur démarrage session: ${startResponse.statusText}`,
+          );
+        }
+
         const startData = await startResponse.json();
         sessionId = startData.session_id;
       } else {
-        await fetch(
+        const appendResponse = await fetch(
           "https://content.dropboxapi.com/2/files/upload_session/append_v2",
           {
             method: "POST",
@@ -205,11 +226,18 @@ async function uploadToDropbox(filePath, fileName, token) {
               }),
             },
             body: chunk,
+            timeout: 600000,
           },
         );
+
+        if (!appendResponse.ok) {
+          throw new Error(`Erreur append chunk: ${appendResponse.statusText}`);
+        }
       }
       offset += chunk.length;
     }
+
+    console.log(`  ✅ Finalisation de l'upload...`);
 
     const finishResponse = await fetch(
       "https://content.dropboxapi.com/2/files/upload_session/finish",
@@ -228,15 +256,22 @@ async function uploadToDropbox(filePath, fileName, token) {
             },
           }),
         },
+        timeout: 600000,
       },
     );
+
+    if (!finishResponse.ok) {
+      throw new Error(`Erreur finalisation: ${finishResponse.statusText}`);
+    }
 
     return await finishResponse.json();
   }
 }
 
-// Route d'upload
+// Route d'upload avec meilleure gestion
 app.post("/upload", upload.array("files"), async (req, res) => {
+  console.log("📥 Début de la requête d'upload");
+
   try {
     const files = req.files;
     const formData = req.body;
@@ -246,6 +281,8 @@ app.post("/upload", upload.array("files"), async (req, res) => {
         .status(400)
         .json({ success: false, message: "Aucun fichier uploadé" });
     }
+
+    console.log(`📁 ${files.length} fichier(s) reçu(s)`);
 
     const token = await refreshAccessToken();
 
@@ -257,12 +294,21 @@ app.post("/upload", upload.array("files"), async (req, res) => {
     const archiveName = `${dateStr}_${nom}_${prenom}_${morceau}.zip`;
     const archivePath = `./uploads/${archiveName}`;
 
+    console.log(`📦 Création du ZIP: ${archiveName}`);
+
     const output = fs.createWriteStream(archivePath);
-    const archive = archiver("zip", { zlib: { level: 9 } });
+    const archive = archiver("zip", {
+      zlib: { level: 6 }, // Niveau de compression réduit pour plus de vitesse
+    });
+
+    archive.on("error", (err) => {
+      throw err;
+    });
 
     archive.pipe(output);
 
     files.forEach((file) => {
+      console.log(`  ➕ Ajout: ${file.originalname}`);
       archive.file(file.path, { name: file.originalname });
     });
 
@@ -286,11 +332,17 @@ app.post("/upload", upload.array("files"), async (req, res) => {
     archive.append(infoContent, { name: "informations.txt" });
 
     await archive.finalize();
-
     await new Promise((resolve) => output.on("close", resolve));
 
+    console.log(
+      `✅ ZIP créé (${(archive.pointer() / 1024 / 1024).toFixed(2)} MB)`,
+    );
+
+    console.log(`☁️ Upload vers Dropbox...`);
     const uploadResult = await uploadToDropbox(archivePath, archiveName, token);
 
+    // Nettoyage des fichiers temporaires
+    console.log(`🧹 Nettoyage...`);
     files.forEach((file) => {
       if (fs.existsSync(file.path)) {
         fs.unlinkSync(file.path);
