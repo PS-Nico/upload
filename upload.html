@@ -1,0 +1,1311 @@
+<!doctype html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Upload vers Dropbox</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+    </head>
+    <body
+        class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen p-2 md:p-4"
+    >
+        <div class="max-w-7xl mx-auto">
+            <div class="bg-white rounded-2xl shadow-xl p-4 md:p-6">
+                <div class="text-center mb-6">
+                    <h1
+                        class="text-2xl md:text-3xl font-bold text-gray-800 mb-2"
+                    >
+                        Upload de Fichiers vers Dropbox
+                    </h1>
+                    <p class="text-sm md:text-base text-gray-600">
+                        Transférez vos fichiers directement vers Dropbox (max 3
+                        GB par fichier)
+                    </p>
+                    <button
+                        onclick="testConnection()"
+                        class="mt-3 text-sm text-indigo-600 hover:text-indigo-800 underline"
+                    >
+                        Tester la connexion à Dropbox
+                    </button>
+                </div>
+
+                <!-- Charte de livrables audio -->
+                <div
+                    class="mb-6 bg-gradient-to-br from-indigo-50 to-blue-50 p-3 md:p-5 rounded-xl border-2 border-indigo-200"
+                >
+                    <div class="flex items-start space-x-3 mb-4">
+                        <svg
+                            class="w-6 h-6 text-indigo-600 flex-shrink-0 mt-1"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                            />
+                        </svg>
+                        <div class="flex-1">
+                            <h2
+                                class="text-lg md:text-xl font-bold text-gray-800 mb-2"
+                            >
+                                CHARTE DE LIVRABLES AUDIO
+                            </h2>
+                            <p class="text-xs md:text-sm text-gray-700 mb-3">
+                                Réception des fichiers – Productions & Artistes
+                            </p>
+                            <p
+                                class="text-sm md:text-base text-gray-600 leading-relaxed mb-4"
+                            >
+                                Cette charte définit les formats, règles de
+                                préparation, nomenclatures et informations
+                                obligatoires pour toute livraison de fichiers
+                                audio destinés à l'encodage, l'intégration et
+                                l'exploitation en production live. Tout livrable
+                                ne respectant pas ces règles pourra être refusé,
+                                retardé ou faire l'objet d'une facturation
+                                complémentaire.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Sections de la charte -->
+                    <div
+                        class="space-y-3 mb-4 max-h-[500px] md:max-h-[600px] overflow-y-auto bg-white p-3 md:p-4 rounded-lg border border-gray-200"
+                    >
+                        <!-- Section 1 -->
+                        <details
+                            class="group"
+                            data-section="1"
+                            ontoggle="markSectionAsRead(1)"
+                        >
+                            <summary
+                                class="cursor-pointer font-semibold text-gray-800 hover:text-indigo-600 transition-colors list-none flex items-center justify-between p-3 bg-gray-50 rounded-lg"
+                            >
+                                <span class="text-sm md:text-base pr-2"
+                                    >1. FORMAT AUDIO OBLIGATOIRE</span
+                                >
+                                <div
+                                    class="flex items-center space-x-2 flex-shrink-0"
+                                >
+                                    <span
+                                        class="read-indicator hidden text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full whitespace-nowrap"
+                                        >✓ Lu</span
+                                    >
+                                    <svg
+                                        class="w-5 h-5 transition-transform group-open:rotate-180"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M19 9l-7 7-7-7"
+                                        />
+                                    </svg>
+                                </div>
+                            </summary>
+                            <ul
+                                class="mt-3 ml-4 md:ml-6 text-sm md:text-base text-gray-700 space-y-2 list-disc leading-relaxed pr-2"
+                            >
+                                <li>Sample Rate : 48 kHz</li>
+                                <li>Résolution : 24 bits</li>
+                                <li>Format : WAV (PCM, non compressé)</li>
+                                <li>Pas de normalisation automatique</li>
+                                <li>
+                                    Pas de limiter brick Wall sur les stems
+                                    (sauf mention artistique explicite)
+                                </li>
+                            </ul>
+                        </details>
+
+                        <!-- Section 2 -->
+                        <details
+                            class="group"
+                            data-section="2"
+                            ontoggle="markSectionAsRead(2)"
+                        >
+                            <summary
+                                class="cursor-pointer font-semibold text-gray-800 hover:text-indigo-600 transition-colors list-none flex items-center justify-between p-3 bg-gray-50 rounded-lg"
+                            >
+                                <span class="text-sm md:text-base pr-2"
+                                    >2. STRUCTURE TEMPO & TIME</span
+                                >
+                                <div
+                                    class="flex items-center space-x-2 flex-shrink-0"
+                                >
+                                    <span
+                                        class="read-indicator hidden text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full whitespace-nowrap"
+                                        >✓ Lu</span
+                                    >
+                                    <svg
+                                        class="w-5 h-5 transition-transform group-open:rotate-180"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M19 9l-7 7-7-7"
+                                        />
+                                    </svg>
+                                </div>
+                            </summary>
+                            <ul
+                                class="mt-3 ml-4 md:ml-6 text-sm md:text-base text-gray-700 space-y-2 list-disc leading-relaxed pr-2"
+                            >
+                                <li>
+                                    Tous les fichiers doivent démarrer sur Beat
+                                    1, Bar 1
+                                </li>
+                                <li>Jamais au milieu d'une mesure</li>
+                                <li>
+                                    Pré-roll obligatoire : 1 à 2 mesures minimum
+                                </li>
+                                <li>
+                                    Tempo : BPM fixe indiqué / BPM variable →
+                                    tempo map obligatoire
+                                </li>
+                            </ul>
+                        </details>
+
+                        <!-- Section 3 -->
+                        <details
+                            class="group"
+                            data-section="3"
+                            ontoggle="markSectionAsRead(3)"
+                        >
+                            <summary
+                                class="cursor-pointer font-semibold text-gray-800 hover:text-indigo-600 transition-colors list-none flex items-center justify-between p-3 bg-gray-50 rounded-lg"
+                            >
+                                <span class="text-sm md:text-base pr-2"
+                                    >3. CLICK TRACK / CONDUCTEUR</span
+                                >
+                                <div
+                                    class="flex items-center space-x-2 flex-shrink-0"
+                                >
+                                    <span
+                                        class="read-indicator hidden text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full whitespace-nowrap"
+                                        >✓ Lu</span
+                                    >
+                                    <svg
+                                        class="w-5 h-5 transition-transform group-open:rotate-180"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M19 9l-7 7-7-7"
+                                        />
+                                    </svg>
+                                </div>
+                            </summary>
+                            <ul
+                                class="mt-3 ml-4 md:ml-6 text-sm md:text-base text-gray-700 space-y-2 list-disc leading-relaxed pr-2"
+                            >
+                                <li>
+                                    Click Track obligatoire pour chaque morceau
+                                </li>
+                                <li>
+                                    Doit respecter la signature rythmique réelle
+                                </li>
+                                <li>Doit être cohérent musicalement</li>
+                                <li>
+                                    Doit suivre strictement l'écriture si
+                                    partitions
+                                </li>
+                                <li>
+                                    Référence d'encodage et de contrôle session
+                                </li>
+                            </ul>
+                        </details>
+
+                        <!-- Section 4 -->
+                        <details
+                            class="group"
+                            data-section="4"
+                            ontoggle="markSectionAsRead(4)"
+                        >
+                            <summary
+                                class="cursor-pointer font-semibold text-gray-800 hover:text-indigo-600 transition-colors list-none flex items-center justify-between p-3 bg-gray-50 rounded-lg"
+                            >
+                                <span class="text-sm md:text-base pr-2"
+                                    >4. STEMS – RÈGLES DE SÉPARATION</span
+                                >
+                                <div
+                                    class="flex items-center space-x-2 flex-shrink-0"
+                                >
+                                    <span
+                                        class="read-indicator hidden text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full whitespace-nowrap"
+                                        >✓ Lu</span
+                                    >
+                                    <svg
+                                        class="w-5 h-5 transition-transform group-open:rotate-180"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M19 9l-7 7-7-7"
+                                        />
+                                    </svg>
+                                </div>
+                            </summary>
+                            <ul
+                                class="mt-3 ml-4 md:ml-6 text-sm md:text-base text-gray-700 space-y-2 list-disc leading-relaxed pr-2"
+                            >
+                                <li>Un stem = une fonction claire</li>
+                                <li>Pas de stems fourre-tout</li>
+                                <li>Pas de regroupement arbitraire</li>
+                                <li>Lead vocal toujours livré en témoin</li>
+                                <li>
+                                    Séparation obligatoire : Lead / BVs / Chœurs
+                                    / FX Vocals
+                                </li>
+                                <li>
+                                    Séparer si pertinent : Drums, Bass,
+                                    Harmonic, FX
+                                </li>
+                                <li>
+                                    Contraintes artistiques à préciser
+                                    explicitement
+                                </li>
+                            </ul>
+                        </details>
+
+                        <!-- Section 5 -->
+                        <details
+                            class="group"
+                            data-section="5"
+                            ontoggle="markSectionAsRead(5)"
+                        >
+                            <summary
+                                class="cursor-pointer font-semibold text-gray-800 hover:text-indigo-600 transition-colors list-none flex items-center justify-between p-3 bg-gray-50 rounded-lg"
+                            >
+                                <span class="text-sm md:text-base pr-2"
+                                    >5. STEMS DE CUE / REPÈRES</span
+                                >
+                                <div
+                                    class="flex items-center space-x-2 flex-shrink-0"
+                                >
+                                    <span
+                                        class="read-indicator hidden text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full whitespace-nowrap"
+                                        >✓ Lu</span
+                                    >
+                                    <svg
+                                        class="w-5 h-5 transition-transform group-open:rotate-180"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M19 9l-7 7-7-7"
+                                        />
+                                    </svg>
+                                </div>
+                            </summary>
+                            <ul
+                                class="mt-3 ml-4 md:ml-6 text-sm md:text-base text-gray-700 space-y-2 list-disc leading-relaxed pr-2"
+                            >
+                                <li>Type de cue à préciser</li>
+                                <li>Destinataires à préciser</li>
+                                <li>Livrer en stems séparés</li>
+                                <li>
+                                    Ne jamais les intégrer aux stems musicaux
+                                </li>
+                            </ul>
+                        </details>
+
+                        <!-- Section 6 -->
+                        <details
+                            class="group"
+                            data-section="6"
+                            ontoggle="markSectionAsRead(6)"
+                        >
+                            <summary
+                                class="cursor-pointer font-semibold text-gray-800 hover:text-indigo-600 transition-colors list-none flex items-center justify-between p-3 bg-gray-50 rounded-lg"
+                            >
+                                <span class="text-sm md:text-base pr-2"
+                                    >6. NOMENCLATURE DES FICHIERS</span
+                                >
+                                <div
+                                    class="flex items-center space-x-2 flex-shrink-0"
+                                >
+                                    <span
+                                        class="read-indicator hidden text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full whitespace-nowrap"
+                                        >✓ Lu</span
+                                    >
+                                    <svg
+                                        class="w-5 h-5 transition-transform group-open:rotate-180"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M19 9l-7 7-7-7"
+                                        />
+                                    </svg>
+                                </div>
+                            </summary>
+                            <ul
+                                class="mt-3 ml-4 md:ml-6 text-sm md:text-base text-gray-700 space-y-2 list-disc leading-relaxed pr-2"
+                            >
+                                <li>
+                                    Format : Artist - Song - StemName - vX -
+                                    YYYYMMDD.wav
+                                </li>
+                                <li>Première livraison = v1</li>
+                                <li>Toute modification = v2, v3…</li>
+                                <li>Date d'export réelle</li>
+                                <li>Pas d'abréviations ambiguës</li>
+                                <li>Pas de caractères spéciaux inutiles</li>
+                            </ul>
+                        </details>
+
+                        <!-- Section 7 -->
+                        <details
+                            class="group"
+                            data-section="7"
+                            ontoggle="markSectionAsRead(7)"
+                        >
+                            <summary
+                                class="cursor-pointer font-semibold text-gray-800 hover:text-indigo-600 transition-colors list-none flex items-center justify-between p-3 bg-gray-50 rounded-lg"
+                            >
+                                <span class="text-sm md:text-base pr-2"
+                                    >7. INFORMATIONS À FOURNIR</span
+                                >
+                                <div
+                                    class="flex items-center space-x-2 flex-shrink-0"
+                                >
+                                    <span
+                                        class="read-indicator hidden text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full whitespace-nowrap"
+                                        >✓ Lu</span
+                                    >
+                                    <svg
+                                        class="w-5 h-5 transition-transform group-open:rotate-180"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M19 9l-7 7-7-7"
+                                        />
+                                    </svg>
+                                </div>
+                            </summary>
+                            <ul
+                                class="mt-3 ml-4 md:ml-6 text-sm md:text-base text-gray-700 space-y-2 list-disc leading-relaxed pr-2"
+                            >
+                                <li>Artiste</li>
+                                <li>Nom du morceau</li>
+                                <li>BPM ou tempo variable</li>
+                                <li>Signature rythmique</li>
+                                <li>Durée totale</li>
+                                <li>Liste exhaustive des stems</li>
+                                <li>Liste des stems témoins</li>
+                                <li>
+                                    Contraintes artistiques et cas particuliers
+                                </li>
+                            </ul>
+                        </details>
+
+                        <!-- Section 8 -->
+                        <details
+                            class="group"
+                            data-section="8"
+                            ontoggle="markSectionAsRead(8)"
+                        >
+                            <summary
+                                class="cursor-pointer font-semibold text-gray-800 hover:text-indigo-600 transition-colors list-none flex items-center justify-between p-3 bg-gray-50 rounded-lg"
+                            >
+                                <span class="text-sm md:text-base pr-2"
+                                    >8. UPDATES / ANNULE ET REMPLACE</span
+                                >
+                                <div
+                                    class="flex items-center space-x-2 flex-shrink-0"
+                                >
+                                    <span
+                                        class="read-indicator hidden text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full whitespace-nowrap"
+                                        >✓ Lu</span
+                                    >
+                                    <svg
+                                        class="w-5 h-5 transition-transform group-open:rotate-180"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M19 9l-7 7-7-7"
+                                        />
+                                    </svg>
+                                </div>
+                            </summary>
+                            <ul
+                                class="mt-3 ml-4 md:ml-6 text-sm md:text-base text-gray-700 space-y-2 list-disc leading-relaxed pr-2"
+                            >
+                                <li>Annule et remplace obligatoire</li>
+                                <li>
+                                    Mise à jour des fichiers audio et du fichier
+                                    infos
+                                </li>
+                                <li>
+                                    Préciser : ce qui est remplacé, par quoi,
+                                    pourquoi
+                                </li>
+                            </ul>
+                        </details>
+                    </div>
+
+                    <!-- Progression de lecture -->
+                    <div
+                        id="readProgress"
+                        class="mb-4 p-3 bg-yellow-50 border border-yellow-200 rounded-lg hidden"
+                    >
+                        <div
+                            class="flex items-center space-x-2 text-yellow-800"
+                        >
+                            <svg
+                                class="w-5 h-5 flex-shrink-0"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+                                />
+                            </svg>
+                            <span class="text-xs md:text-sm font-medium">
+                                Veuillez ouvrir et lire toutes les sections
+                                (<span id="sectionsRead">0</span>/8)
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Case à cocher -->
+                    <div
+                        class="flex items-start space-x-3 bg-white p-3 md:p-4 rounded-lg border-2 border-indigo-300"
+                    >
+                        <input
+                            type="checkbox"
+                            id="charteAccepted"
+                            class="mt-1 w-5 h-5 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500 cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 flex-shrink-0"
+                            onchange="toggleCharteAcceptance()"
+                            disabled
+                        />
+                        <label
+                            for="charteAccepted"
+                            class="cursor-pointer text-xs md:text-base text-gray-800 font-medium"
+                        >
+                            J'ai lu et j'accepte la charte de livrables audio.
+                            Je m'engage à respecter l'ensemble des exigences
+                            techniques énoncées ci-dessus.
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Popup d'avertissement -->
+                <div
+                    id="warningPopup"
+                    class="hidden mb-6 bg-red-50 border-2 border-red-500 rounded-xl p-4 md:p-5 shadow-lg"
+                >
+                    <div class="flex items-start space-x-3">
+                        <div class="animate-pulse">
+                            <svg
+                                class="w-6 h-6 md:w-8 md:h-8 text-red-600 flex-shrink-0"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+                                />
+                            </svg>
+                        </div>
+                        <div class="flex-1">
+                            <h3
+                                class="text-base md:text-lg font-bold text-red-800 mb-2"
+                            >
+                                Conditions non remplies
+                            </h3>
+                            <p
+                                id="warningMessage"
+                                class="text-sm md:text-base text-red-700 font-medium leading-relaxed"
+                            ></p>
+                        </div>
+                        <button
+                            onclick="hideWarning()"
+                            class="text-red-600 hover:text-red-800 transition-colors flex-shrink-0"
+                        >
+                            <svg
+                                class="w-5 h-5 md:w-6 md:h-6"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M6 18L18 6M6 6l12 12"
+                                />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Formulaire d'informations -->
+                <div class="mb-6 bg-gray-50 p-3 md:p-5 rounded-xl">
+                    <h2
+                        class="text-lg md:text-xl font-semibold text-gray-800 mb-4 md:mb-6"
+                    >
+                        Informations requises
+                    </h2>
+
+                    <!-- Informations personnelles -->
+                    <div class="mb-6">
+                        <h3
+                            class="text-base md:text-lg font-medium text-gray-700 mb-3 md:mb-4"
+                        >
+                            Contact technique
+                        </h3>
+                        <div
+                            class="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4"
+                        >
+                            <div>
+                                <label
+                                    class="block text-sm font-medium text-gray-700 mb-2"
+                                >
+                                    Nom <span class="text-red-500">*</span>
+                                </label>
+                                <input
+                                    type="text"
+                                    id="field1"
+                                    class="w-full px-3 md:px-4 py-2 text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                                    placeholder="Votre nom"
+                                />
+                            </div>
+                            <div>
+                                <label
+                                    class="block text-sm font-medium text-gray-700 mb-2"
+                                >
+                                    Prénom <span class="text-red-500">*</span>
+                                </label>
+                                <input
+                                    type="text"
+                                    id="field2"
+                                    class="w-full px-3 md:px-4 py-2 text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                                    placeholder="Votre prénom"
+                                />
+                            </div>
+                            <div>
+                                <label
+                                    class="block text-sm font-medium text-gray-700 mb-2"
+                                >
+                                    Adresse mail
+                                    <span class="text-red-500">*</span>
+                                </label>
+                                <input
+                                    type="email"
+                                    id="field3"
+                                    class="w-full px-3 md:px-4 py-2 text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                                    placeholder="exemple@email.com"
+                                />
+                            </div>
+                            <div>
+                                <label
+                                    class="block text-sm font-medium text-gray-700 mb-2"
+                                >
+                                    Téléphone
+                                    <span class="text-red-500">*</span>
+                                </label>
+                                <input
+                                    type="tel"
+                                    id="field4"
+                                    class="w-full px-3 md:px-4 py-2 text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                                    placeholder="+33 6 12 34 56 78"
+                                />
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Informations du morceau -->
+                    <div class="mb-6">
+                        <h3
+                            class="text-base md:text-lg font-medium text-gray-700 mb-3 md:mb-4"
+                        >
+                            Informations du morceau
+                        </h3>
+                        <div
+                            class="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4"
+                        >
+                            <div class="md:col-span-2">
+                                <label
+                                    class="block text-sm font-medium text-gray-700 mb-2"
+                                >
+                                    Nom du morceau
+                                    <span class="text-red-500">*</span>
+                                </label>
+                                <input
+                                    type="text"
+                                    id="field5"
+                                    class="w-full px-3 md:px-4 py-2 text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                                    placeholder="Titre du morceau"
+                                />
+                            </div>
+                            <div class="md:col-span-2">
+                                <label
+                                    class="block text-sm font-medium text-gray-700 mb-2"
+                                >
+                                    Artiste <span class="text-red-500">*</span>
+                                </label>
+                                <input
+                                    type="text"
+                                    id="field6"
+                                    class="w-full px-3 md:px-4 py-2 text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                                    placeholder="Nom de l'artiste"
+                                />
+                            </div>
+                            <div>
+                                <label
+                                    class="block text-sm font-medium text-gray-700 mb-2"
+                                >
+                                    BPM ou tempo variable
+                                    <span class="text-red-500">*</span>
+                                </label>
+                                <input
+                                    type="text"
+                                    id="field7"
+                                    class="w-full px-3 md:px-4 py-2 text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                                    placeholder="ex: 120 BPM ou variable"
+                                />
+                            </div>
+                            <div>
+                                <label
+                                    class="block text-sm font-medium text-gray-700 mb-2"
+                                >
+                                    Signature rythmique
+                                    <span class="text-red-500">*</span>
+                                </label>
+                                <input
+                                    type="text"
+                                    id="field8"
+                                    class="w-full px-3 md:px-4 py-2 text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                                    placeholder="ex: 4/4, 3/4, 7/8..."
+                                />
+                            </div>
+                            <div>
+                                <label
+                                    class="block text-sm font-medium text-gray-700 mb-2"
+                                >
+                                    Durée totale
+                                    <span class="text-red-500">*</span>
+                                </label>
+                                <input
+                                    type="text"
+                                    id="field9"
+                                    class="w-full px-3 md:px-4 py-2 text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                                    placeholder="ex: 3:45 ou 3min 45s"
+                                />
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Informations techniques -->
+                    <div>
+                        <h3
+                            class="text-base md:text-lg font-medium text-gray-700 mb-3 md:mb-4"
+                        >
+                            Informations techniques
+                        </h3>
+                        <div class="space-y-3 md:space-y-4">
+                            <div>
+                                <label
+                                    class="block text-sm font-medium text-gray-700 mb-2"
+                                >
+                                    Liste exhaustive des stems
+                                    <span class="text-red-500">*</span>
+                                </label>
+                                <textarea
+                                    id="field10"
+                                    rows="4"
+                                    class="w-full px-3 md:px-4 py-2 text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent resize-none"
+                                    placeholder="Listez tous les stems (pistes audio) : Voix lead, Batterie, Basse, Guitare, etc."
+                                ></textarea>
+                            </div>
+                            <div>
+                                <label
+                                    class="block text-sm font-medium text-gray-700 mb-2"
+                                >
+                                    Liste des stems témoins
+                                    <span class="text-red-500">*</span>
+                                </label>
+                                <textarea
+                                    id="field11"
+                                    rows="3"
+                                    class="w-full px-3 md:px-4 py-2 text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent resize-none"
+                                    placeholder="Indiquez les stems de référence principaux"
+                                ></textarea>
+                            </div>
+                            <div>
+                                <label
+                                    class="block text-sm font-medium text-gray-700 mb-2"
+                                >
+                                    Contraintes artistiques et cas particuliers
+                                    <span class="text-red-500">*</span>
+                                </label>
+                                <textarea
+                                    id="field12"
+                                    rows="4"
+                                    class="w-full px-3 md:px-4 py-2 text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent resize-none"
+                                    placeholder="Décrivez les contraintes, particularités ou instructions spéciales pour ce projet"
+                                ></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="formError" class="mt-4 hidden">
+                        <div
+                            class="flex items-center space-x-2 text-red-600 bg-red-50 p-3 rounded-lg"
+                        >
+                            <svg
+                                class="w-5 h-5"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                                />
+                            </svg>
+                            <span class="text-sm font-medium"
+                                >Veuillez remplir tous les champs
+                                obligatoires</span
+                            >
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Zone de Drop -->
+                <div
+                    id="dropZone"
+                    class="border-4 border-dashed border-indigo-300 rounded-xl p-8 md:p-12 mb-6 text-center bg-indigo-50 hover:bg-indigo-100 transition-colors cursor-pointer"
+                >
+                    <svg
+                        class="w-12 h-12 md:w-16 md:h-16 text-indigo-500 mx-auto mb-4"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                        />
+                    </svg>
+                    <p class="text-base md:text-lg text-gray-700 mb-2">
+                        Glissez vos fichiers ici ou cliquez pour sélectionner
+                    </p>
+                    <p class="text-xs md:text-sm text-gray-500">
+                        Tous types de fichiers acceptés (max 3 GB par fichier)
+                    </p>
+                    <input type="file" id="fileInput" multiple class="hidden" />
+                </div>
+
+                <div id="fileList" class="mb-6 hidden">
+                    <h3
+                        class="text-base md:text-lg font-semibold text-gray-800 mb-3"
+                    >
+                        Fichiers sélectionnés (<span id="fileCount">0</span>)
+                    </h3>
+                    <div
+                        id="files"
+                        class="space-y-2 max-h-64 overflow-y-auto"
+                    ></div>
+                </div>
+
+                <div id="uploadStatus" class="mb-6 space-y-2 hidden"></div>
+
+                <!-- Barre de progression -->
+                <div id="progressContainer" class="mb-6 hidden">
+                    <div class="bg-gray-200 rounded-full h-4 overflow-hidden">
+                        <div
+                            id="progressBar"
+                            class="bg-gradient-to-r from-indigo-500 to-purple-600 h-full transition-all duration-300 flex items-center justify-center"
+                            style="width: 0%"
+                        >
+                            <span
+                                id="progressText"
+                                class="text-xs font-semibold text-white"
+                            ></span>
+                        </div>
+                    </div>
+                    <div
+                        class="mt-2 text-xs md:text-sm text-gray-600 text-center"
+                    >
+                        <span id="progressInfo">Préparation...</span>
+                    </div>
+                </div>
+
+                <button
+                    id="uploadBtn"
+                    class="w-full py-3 px-6 rounded-lg font-semibold text-sm md:text-base text-white transition-all bg-gray-300 cursor-not-allowed"
+                >
+                    Sélectionnez des fichiers pour commencer
+                </button>
+
+                <div class="mt-4 md:mt-6 p-3 md:p-4 bg-blue-50 rounded-lg">
+                    <p class="text-xs md:text-sm text-blue-800">
+                        <strong>Configuration requise :</strong> Assurez-vous
+                        que le serveur Node.js est démarré sur le port 3000 et
+                        que votre token Dropbox est correctement configuré dans
+                        le fichier server.js
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            const API_URL = "http://localhost:3000";
+            let selectedFiles = [];
+            let isUploading = false;
+            let charteAccepted = false;
+            let sectionsRead = new Set();
+            const totalSections = 8;
+
+            let dropZone = document.getElementById("dropZone");
+            const fileInput = document.getElementById("fileInput");
+            const fileList = document.getElementById("fileList");
+            const filesContainer = document.getElementById("files");
+            const fileCount = document.getElementById("fileCount");
+            let uploadBtn = document.getElementById("uploadBtn");
+            const uploadStatus = document.getElementById("uploadStatus");
+            const formError = document.getElementById("formError");
+            const progressContainer =
+                document.getElementById("progressContainer");
+            const progressBar = document.getElementById("progressBar");
+            const progressText = document.getElementById("progressText");
+            const progressInfo = document.getElementById("progressInfo");
+
+            function markSectionAsRead(sectionNumber) {
+                const detail = document.querySelector(
+                    `[data-section="${sectionNumber}"]`,
+                );
+                if (detail) {
+                    sectionsRead.add(sectionNumber);
+                    const indicator = detail.querySelector(".read-indicator");
+                    if (indicator) indicator.classList.remove("hidden");
+                    document.getElementById("sectionsRead").textContent =
+                        sectionsRead.size;
+                    if (sectionsRead.size === totalSections) {
+                        document.getElementById("charteAccepted").disabled =
+                            false;
+                        document
+                            .getElementById("readProgress")
+                            .classList.add("hidden");
+                    } else {
+                        document
+                            .getElementById("readProgress")
+                            .classList.remove("hidden");
+                    }
+                    updateUploadButton();
+                }
+            }
+
+            function showWarning(message) {
+                const popup = document.getElementById("warningPopup");
+                popup.classList.remove("hidden");
+                document.getElementById("warningMessage").textContent = message;
+                window.scrollTo({ top: 0, behavior: "smooth" });
+                popup.style.animation = "none";
+                setTimeout(() => {
+                    popup.style.animation =
+                        "pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite";
+                }, 10);
+            }
+
+            function hideWarning() {
+                const popup = document.getElementById("warningPopup");
+                popup.classList.add("hidden");
+                popup.style.animation = "none";
+            }
+
+            function toggleCharteAcceptance() {
+                charteAccepted =
+                    document.getElementById("charteAccepted").checked;
+                hideWarning();
+                updateUploadButton();
+            }
+
+            function updateUploadButton() {
+                const oldBtn = document.getElementById("uploadBtn");
+                const newBtn = oldBtn.cloneNode(true);
+                oldBtn.parentNode.replaceChild(newBtn, oldBtn);
+                const btn = document.getElementById("uploadBtn");
+
+                if (sectionsRead.size < totalSections) {
+                    btn.className =
+                        "w-full py-3 px-6 rounded-lg font-semibold text-sm md:text-base text-white transition-all bg-gray-400 hover:bg-gray-500 cursor-pointer";
+                    btn.textContent = `Lisez toutes les sections de la charte (${sectionsRead.size}/${totalSections})`;
+                    btn.addEventListener("click", (e) => {
+                        e.preventDefault();
+                        showWarning(
+                            `Vous devez ouvrir et lire toutes les sections de la charte avant de continuer. Sections lues : ${sectionsRead.size}/${totalSections}`,
+                        );
+                    });
+                } else if (!charteAccepted) {
+                    btn.className =
+                        "w-full py-3 px-6 rounded-lg font-semibold text-sm md:text-base text-white transition-all bg-orange-500 hover:bg-orange-600 cursor-pointer shadow-lg";
+                    btn.textContent = "Acceptez la charte pour continuer";
+                    btn.addEventListener("click", (e) => {
+                        e.preventDefault();
+                        showWarning(
+                            "Vous devez cocher la case pour accepter la charte de livrables audio avant de pouvoir uploader vos fichiers.",
+                        );
+                        document
+                            .getElementById("charteAccepted")
+                            .scrollIntoView({
+                                behavior: "smooth",
+                                block: "center",
+                            });
+                    });
+                } else if (selectedFiles.length === 0) {
+                    btn.className =
+                        "w-full py-3 px-6 rounded-lg font-semibold text-sm md:text-base text-white transition-all bg-gray-300 cursor-not-allowed";
+                    btn.textContent =
+                        "Sélectionnez des fichiers pour commencer";
+                } else {
+                    btn.className =
+                        "w-full py-3 px-6 rounded-lg font-semibold text-sm md:text-base text-white transition-all bg-indigo-600 hover:bg-indigo-700 shadow-lg hover:shadow-xl cursor-pointer";
+                    btn.textContent = `Transférer ${selectedFiles.length} fichier${selectedFiles.length > 1 ? "s" : ""} vers Dropbox`;
+                    btn.addEventListener("click", uploadFiles);
+                }
+            }
+
+            const fields = [
+                document.getElementById("field1"),
+                document.getElementById("field2"),
+                document.getElementById("field3"),
+                document.getElementById("field4"),
+                document.getElementById("field5"),
+                document.getElementById("field6"),
+                document.getElementById("field7"),
+                document.getElementById("field8"),
+                document.getElementById("field9"),
+                document.getElementById("field10"),
+                document.getElementById("field11"),
+                document.getElementById("field12"),
+            ];
+
+            function validateFields() {
+                formError.classList.add("hidden");
+                let allValid = true;
+                fields.forEach((field) => {
+                    if (field.value.trim() === "") {
+                        allValid = false;
+                        field.classList.add("border-red-500");
+                    } else {
+                        field.classList.remove("border-red-500");
+                    }
+                });
+                return allValid;
+            }
+
+            fields.forEach((field) => {
+                field.addEventListener("input", () => {
+                    if (field.value.trim() !== "") {
+                        field.classList.remove("border-red-500");
+                    }
+                    formError.classList.add("hidden");
+                });
+            });
+
+            dropZone.addEventListener("click", () => {
+                if (sectionsRead.size < totalSections) {
+                    showWarning(
+                        `Vous devez d'abord lire toutes les sections de la charte avant de sélectionner des fichiers. Sections lues : ${sectionsRead.size}/${totalSections}`,
+                    );
+                    return;
+                }
+                if (!charteAccepted) {
+                    showWarning(
+                        "Vous devez accepter la charte de livrables audio avant de sélectionner des fichiers.",
+                    );
+                    return;
+                }
+                fileInput.click();
+            });
+
+            fileInput.addEventListener("change", (e) => {
+                addFiles(Array.from(e.target.files));
+            });
+
+            dropZone.addEventListener("dragover", (e) => {
+                e.preventDefault();
+                dropZone.classList.add("border-indigo-500", "bg-indigo-200");
+            });
+
+            dropZone.addEventListener("dragleave", () => {
+                dropZone.classList.remove("border-indigo-500", "bg-indigo-200");
+            });
+
+            dropZone.addEventListener("drop", (e) => {
+                e.preventDefault();
+                dropZone.classList.remove("border-indigo-500", "bg-indigo-200");
+                if (sectionsRead.size < totalSections) {
+                    showWarning(
+                        `Vous devez d'abord lire toutes les sections de la charte avant d'uploader des fichiers. Sections lues : ${sectionsRead.size}/${totalSections}`,
+                    );
+                    return;
+                }
+                if (!charteAccepted) {
+                    showWarning(
+                        "Vous devez accepter la charte de livrables audio avant d'uploader des fichiers.",
+                    );
+                    return;
+                }
+                addFiles(Array.from(e.dataTransfer.files));
+            });
+
+            function addFiles(files) {
+                selectedFiles = [...selectedFiles, ...files];
+                updateFileList();
+            }
+
+            function removeFile(index) {
+                selectedFiles.splice(index, 1);
+                updateFileList();
+            }
+
+            function updateFileList() {
+                if (selectedFiles.length === 0) {
+                    fileList.classList.add("hidden");
+                } else {
+                    fileList.classList.remove("hidden");
+                    fileCount.textContent = selectedFiles.length;
+                }
+                updateUploadButton();
+                if (selectedFiles.length === 0) return;
+                filesContainer.innerHTML = selectedFiles
+                    .map(
+                        (file, index) => `
+                    <div class="flex items-center justify-between bg-gray-50 p-3 rounded-lg">
+                        <div class="flex items-center space-x-3 flex-1 min-w-0">
+                            <svg class="w-5 h-5 text-indigo-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
+                            </svg>
+                            <div class="flex-1 min-w-0">
+                                <p class="text-sm font-medium text-gray-800 truncate">${file.name}</p>
+                                <p class="text-xs text-gray-500">${formatFileSize(file.size)}</p>
+                            </div>
+                        </div>
+                        <button onclick="removeFile(${index})" class="text-red-500 hover:text-red-700 ml-2" ${isUploading ? "disabled" : ""}>
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                            </svg>
+                        </button>
+                    </div>
+                `,
+                    )
+                    .join("");
+            }
+
+            function formatFileSize(bytes) {
+                if (bytes === 0) return "0 Bytes";
+                const k = 1024;
+                const sizes = ["Bytes", "KB", "MB", "GB"];
+                const i = Math.floor(Math.log(bytes) / Math.log(k));
+                return (
+                    Math.round((bytes / Math.pow(k, i)) * 100) / 100 +
+                    " " +
+                    sizes[i]
+                );
+            }
+
+            async function uploadFiles() {
+                if (selectedFiles.length === 0 || isUploading) return;
+                if (sectionsRead.size < totalSections) {
+                    showWarning(
+                        `Vous devez ouvrir et lire toutes les sections de la charte avant de continuer. Sections lues : ${sectionsRead.size}/${totalSections}`,
+                    );
+                    return;
+                }
+                if (!charteAccepted) {
+                    showWarning(
+                        "Vous devez cocher la case pour accepter la charte de livrables audio avant de pouvoir uploader vos fichiers.",
+                    );
+                    document.getElementById("charteAccepted").scrollIntoView({
+                        behavior: "smooth",
+                        block: "center",
+                    });
+                    return;
+                }
+                if (!validateFields()) {
+                    formError.classList.remove("hidden");
+                    window.scrollTo({ top: 0, behavior: "smooth" });
+                    return;
+                }
+
+                isUploading = true;
+                uploadBtn.disabled = true;
+                uploadBtn.innerHTML = `
+                    <span class="flex items-center justify-center">
+                        <svg class="animate-spin h-5 w-5 mr-3" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none"/>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
+                        </svg>
+                        Transfert en cours vers Dropbox...
+                    </span>
+                `;
+                uploadStatus.innerHTML = "";
+                uploadStatus.classList.add("hidden");
+                progressContainer.classList.remove("hidden");
+                progressBar.style.width = "0%";
+                progressText.textContent = "0%";
+                progressInfo.textContent = "Préparation des fichiers...";
+
+                const formData = new FormData();
+                selectedFiles.forEach((file) => formData.append("files", file));
+                fields.forEach((field, index) => {
+                    formData.append(`field${index + 1}`, field.value.trim());
+                });
+
+                try {
+                    const xhr = new XMLHttpRequest();
+                    xhr.upload.addEventListener("progress", (e) => {
+                        if (e.lengthComputable) {
+                            const percentComplete = Math.round(
+                                (e.loaded / e.total) * 100,
+                            );
+                            progressBar.style.width = percentComplete + "%";
+                            progressText.textContent = percentComplete + "%";
+                            if (percentComplete < 100) {
+                                progressInfo.textContent = `Envoi des fichiers... (${formatFileSize(e.loaded)} / ${formatFileSize(e.total)})`;
+                            } else {
+                                progressInfo.textContent =
+                                    "Finalisation sur Dropbox...";
+                            }
+                        }
+                    });
+
+                    const uploadPromise = new Promise((resolve, reject) => {
+                        xhr.onload = () => {
+                            if (xhr.status === 200) {
+                                resolve(JSON.parse(xhr.responseText));
+                            } else {
+                                reject(new Error(`Erreur ${xhr.status}`));
+                            }
+                        };
+                        xhr.onerror = () =>
+                            reject(new Error("Erreur de connexion"));
+                    });
+
+                    xhr.open("POST", `${API_URL}/upload`);
+                    xhr.send(formData);
+                    const data = await uploadPromise;
+
+                    if (data.success) {
+                        progressBar.style.width = "100%";
+                        progressText.textContent = "✓";
+                        progressInfo.textContent = "✅ Transfert terminé !";
+                        setTimeout(() => {
+                            const params = new URLSearchParams({
+                                archive: data.archiveName,
+                                files: data.filesCount,
+                                size: data.totalSize,
+                            });
+                            window.location.href = `/success.html?${params.toString()}`;
+                        }, 1000);
+                    } else {
+                        progressContainer.classList.add("hidden");
+                        uploadStatus.classList.remove("hidden");
+                        uploadStatus.innerHTML = `
+                            <div class="flex items-center space-x-3 p-3 rounded-lg bg-red-50">
+                                <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                <div class="flex-1">
+                                    <p class="text-sm font-medium text-gray-800">Erreur</p>
+                                    <p class="text-xs text-red-600">${data.message || "Erreur lors du transfert"}</p>
+                                </div>
+                            </div>
+                        `;
+                        isUploading = false;
+                        uploadBtn.disabled = false;
+                        updateFileList();
+                    }
+                } catch (error) {
+                    progressContainer.classList.add("hidden");
+                    uploadStatus.classList.remove("hidden");
+                    uploadStatus.innerHTML = `
+                        <div class="flex items-center space-x-3 p-3 rounded-lg bg-red-50">
+                            <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                            <div class="flex-1">
+                                <p class="text-sm font-medium text-gray-800">Erreur de connexion</p>
+                                <p class="text-xs text-red-600">Impossible de se connecter au serveur. Vérifiez que le backend est démarré.</p>
+                            </div>
+                        </div>
+                    `;
+                    isUploading = false;
+                    uploadBtn.disabled = false;
+                    updateFileList();
+                }
+            }
+
+            async function testConnection() {
+                try {
+                    const response = await fetch(`${API_URL}/test-connection`);
+                    const data = await response.json();
+                    alert(
+                        data.success
+                            ? "✅ Connexion à Dropbox réussie !\n" +
+                                  data.message
+                            : "❌ " + data.message,
+                    );
+                } catch (error) {
+                    alert(
+                        "❌ Erreur: Impossible de se connecter au serveur backend",
+                    );
+                }
+            }
+
+            window.addEventListener("load", () => {
+                updateUploadButton();
+                document
+                    .getElementById("readProgress")
+                    .classList.remove("hidden");
+            });
+        </script>
+    </body>
+</html>
