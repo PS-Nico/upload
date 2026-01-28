@@ -7,10 +7,12 @@
         <script src="https://cdn.tailwindcss.com"></script>
     </head>
     <body
-        class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen p-2 md:p-4"
+        class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen p-1 md:p-4"
     >
         <div class="max-w-7xl mx-auto">
-            <div class="bg-white rounded-2xl shadow-xl p-4 md:p-6">
+            <div
+                class="bg-white rounded-xl md:rounded-2xl shadow-xl p-2 md:p-6"
+            >
                 <div class="text-center mb-6">
                     <h1
                         class="text-2xl md:text-3xl font-bold text-gray-800 mb-2"
@@ -21,13 +23,21 @@
                         Transférez vos fichiers directement vers Dropbox (max 3
                         GB par fichier)
                     </p>
+                    <button
+                        onclick="testConnection()"
+                        class="mt-3 text-sm text-indigo-600 hover:text-indigo-800 underline"
+                    >
+                        Tester la connexion à Dropbox
+                    </button>
                 </div>
 
                 <!-- Charte de livrables audio -->
                 <div
-                    class="mb-6 bg-gradient-to-br from-indigo-50 to-blue-50 p-3 md:p-5 rounded-xl border-2 border-indigo-200"
+                    class="mb-4 md:mb-6 bg-gradient-to-br from-indigo-50 to-blue-50 p-2 md:p-5 rounded-lg md:rounded-xl border-2 border-indigo-200"
                 >
-                    <div class="flex items-start space-x-3 mb-4">
+                    <div
+                        class="flex items-start space-x-2 md:space-x-3 mb-3 md:mb-4"
+                    >
                         <svg
                             class="w-6 h-6 text-indigo-600 flex-shrink-0 mt-1"
                             fill="none"
@@ -67,7 +77,7 @@
 
                     <!-- Sections de la charte -->
                     <div
-                        class="space-y-3 mb-4 max-h-[500px] md:max-h-[600px] overflow-y-auto bg-white p-3 md:p-4 rounded-lg border border-gray-200"
+                        class="space-y-2 md:space-y-3 mb-3 md:mb-4 max-h-[500px] md:max-h-[600px] overflow-y-auto bg-white p-2 md:p-4 rounded-lg border border-gray-200"
                     >
                         <!-- Section 1 -->
                         <details
@@ -76,7 +86,7 @@
                             ontoggle="markSectionAsRead(1)"
                         >
                             <summary
-                                class="cursor-pointer font-semibold text-gray-800 hover:text-indigo-600 transition-colors list-none flex items-center justify-between p-3 bg-gray-50 rounded-lg"
+                                class="cursor-pointer font-semibold text-gray-800 hover:text-indigo-600 transition-colors list-none flex items-center justify-between p-2 md:p-3 bg-gray-50 rounded-lg"
                             >
                                 <span class="text-sm md:text-base pr-2"
                                     >1. FORMAT AUDIO OBLIGATOIRE</span
@@ -104,7 +114,7 @@
                                 </div>
                             </summary>
                             <ul
-                                class="mt-3 ml-4 md:ml-6 text-sm md:text-base text-gray-700 space-y-2 list-disc leading-relaxed pr-2"
+                                class="mt-2 md:mt-3 ml-3 md:ml-6 text-sm md:text-base text-gray-700 space-y-1 md:space-y-2 list-disc leading-relaxed pr-1 md:pr-2"
                             >
                                 <li>Sample Rate : 48 kHz</li>
                                 <li>Résolution : 24 bits</li>
@@ -477,7 +487,7 @@
                     <!-- Progression de lecture -->
                     <div
                         id="readProgress"
-                        class="mb-4 p-3 bg-yellow-50 border border-yellow-200 rounded-lg hidden"
+                        class="mb-3 md:mb-4 p-2 md:p-3 bg-yellow-50 border border-yellow-200 rounded-lg hidden"
                     >
                         <div
                             class="flex items-center space-x-2 text-yellow-800"
@@ -504,7 +514,7 @@
 
                     <!-- Case à cocher -->
                     <div
-                        class="flex items-start space-x-3 bg-white p-3 md:p-4 rounded-lg border-2 border-indigo-300"
+                        class="flex items-start space-x-2 md:space-x-3 bg-white p-2 md:p-4 rounded-lg border-2 border-indigo-300"
                     >
                         <input
                             type="checkbox"
@@ -527,7 +537,7 @@
                 <!-- Popup d'avertissement -->
                 <div
                     id="warningPopup"
-                    class="hidden mb-6 bg-red-50 border-2 border-red-500 rounded-xl p-4 md:p-5 shadow-lg"
+                    class="hidden mb-4 md:mb-6 bg-red-50 border-2 border-red-500 rounded-xl p-3 md:p-5 shadow-lg"
                 >
                     <div class="flex items-start space-x-3">
                         <div class="animate-pulse">
@@ -578,22 +588,24 @@
                 </div>
 
                 <!-- Formulaire d'informations -->
-                <div class="mb-6 bg-gray-50 p-3 md:p-5 rounded-xl">
+                <div
+                    class="mb-4 md:mb-6 bg-gray-50 p-2 md:p-5 rounded-lg md:rounded-xl"
+                >
                     <h2
-                        class="text-lg md:text-xl font-semibold text-gray-800 mb-4 md:mb-6"
+                        class="text-lg md:text-xl font-semibold text-gray-800 mb-3 md:mb-6"
                     >
                         Informations requises
                     </h2>
 
                     <!-- Informations personnelles -->
-                    <div class="mb-6">
+                    <div class="mb-4 md:mb-6">
                         <h3
-                            class="text-base md:text-lg font-medium text-gray-700 mb-3 md:mb-4"
+                            class="text-base md:text-lg font-medium text-gray-700 mb-2 md:mb-4"
                         >
                             Contact technique
                         </h3>
                         <div
-                            class="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4"
+                            class="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-4"
                         >
                             <div>
                                 <label
@@ -653,14 +665,14 @@
                     </div>
 
                     <!-- Informations du morceau -->
-                    <div class="mb-6">
+                    <div class="mb-4 md:mb-6">
                         <h3
-                            class="text-base md:text-lg font-medium text-gray-700 mb-3 md:mb-4"
+                            class="text-base md:text-lg font-medium text-gray-700 mb-2 md:mb-4"
                         >
                             Informations du morceau
                         </h3>
                         <div
-                            class="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4"
+                            class="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-4"
                         >
                             <div class="md:col-span-2">
                                 <label
@@ -737,11 +749,11 @@
                     <!-- Informations techniques -->
                     <div>
                         <h3
-                            class="text-base md:text-lg font-medium text-gray-700 mb-3 md:mb-4"
+                            class="text-base md:text-lg font-medium text-gray-700 mb-2 md:mb-4"
                         >
                             Informations techniques
                         </h3>
-                        <div class="space-y-3 md:space-y-4">
+                        <div class="space-y-2 md:space-y-4">
                             <div>
                                 <label
                                     class="block text-sm font-medium text-gray-700 mb-2"
@@ -815,7 +827,7 @@
                 <!-- Zone de Drop -->
                 <div
                     id="dropZone"
-                    class="border-4 border-dashed border-indigo-300 rounded-xl p-8 md:p-12 mb-6 text-center bg-indigo-50 hover:bg-indigo-100 transition-colors cursor-pointer"
+                    class="border-4 border-dashed border-indigo-300 rounded-lg md:rounded-xl p-6 md:p-12 mb-4 md:mb-6 text-center bg-indigo-50 hover:bg-indigo-100 transition-colors cursor-pointer"
                 >
                     <svg
                         class="w-12 h-12 md:w-16 md:h-16 text-indigo-500 mx-auto mb-4"
@@ -839,9 +851,9 @@
                     <input type="file" id="fileInput" multiple class="hidden" />
                 </div>
 
-                <div id="fileList" class="mb-6 hidden">
+                <div id="fileList" class="mb-4 md:mb-6 hidden">
                     <h3
-                        class="text-base md:text-lg font-semibold text-gray-800 mb-3"
+                        class="text-base md:text-lg font-semibold text-gray-800 mb-2 md:mb-3"
                     >
                         Fichiers sélectionnés (<span id="fileCount">0</span>)
                     </h3>
@@ -851,10 +863,13 @@
                     ></div>
                 </div>
 
-                <div id="uploadStatus" class="mb-6 space-y-2 hidden"></div>
+                <div
+                    id="uploadStatus"
+                    class="mb-4 md:mb-6 space-y-2 hidden"
+                ></div>
 
                 <!-- Barre de progression -->
-                <div id="progressContainer" class="mb-6 hidden">
+                <div id="progressContainer" class="mb-4 md:mb-6 hidden">
                     <div class="bg-gray-200 rounded-full h-4 overflow-hidden">
                         <div
                             id="progressBar"
@@ -881,7 +896,7 @@
                     Sélectionnez des fichiers pour commencer
                 </button>
 
-                <div class="mt-4 md:mt-6 p-3 md:p-4 bg-blue-50 rounded-lg">
+                <div class="mt-3 md:mt-6 p-2 md:p-4 bg-blue-50 rounded-lg">
                     <p class="text-xs md:text-sm text-blue-800">
                         <strong>Configuration requise :</strong> Assurez-vous
                         que le serveur Node.js est démarré sur le port 3000 et
@@ -893,7 +908,7 @@
         </div>
 
         <script>
-            const API_URL = window.location.origin;
+            const API_URL = "http://localhost:3000";
             let selectedFiles = [];
             let isUploading = false;
             let charteAccepted = false;
@@ -1151,12 +1166,14 @@
 
             async function uploadFiles() {
                 if (selectedFiles.length === 0 || isUploading) return;
+
                 if (sectionsRead.size < totalSections) {
                     showWarning(
                         `Vous devez ouvrir et lire toutes les sections de la charte avant de continuer. Sections lues : ${sectionsRead.size}/${totalSections}`,
                     );
                     return;
                 }
+
                 if (!charteAccepted) {
                     showWarning(
                         "Vous devez cocher la case pour accepter la charte de livrables audio avant de pouvoir uploader vos fichiers.",
@@ -1167,6 +1184,7 @@
                     });
                     return;
                 }
+
                 if (!validateFields()) {
                     formError.classList.remove("hidden");
                     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -1176,29 +1194,37 @@
                 isUploading = true;
                 uploadBtn.disabled = true;
                 uploadBtn.innerHTML = `
-                    <span class="flex items-center justify-center">
-                        <svg class="animate-spin h-5 w-5 mr-3" viewBox="0 0 24 24">
-                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none"/>
-                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
-                        </svg>
-                        Transfert en cours vers Dropbox...
-                    </span>
-                `;
+                <span class="flex items-center justify-center">
+                    <svg class="animate-spin h-5 w-5 mr-3" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none"/>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
+                    </svg>
+                    Transfert en cours vers Dropbox...
+                </span>
+            `;
                 uploadStatus.innerHTML = "";
                 uploadStatus.classList.add("hidden");
+
                 progressContainer.classList.remove("hidden");
                 progressBar.style.width = "0%";
                 progressText.textContent = "0%";
                 progressInfo.textContent = "Préparation des fichiers...";
 
+                // Empêcher la fermeture accidentelle de la page
+                window.onbeforeunload = function () {
+                    return "Un upload est en cours. Êtes-vous sûr de vouloir quitter ?";
+                };
+
                 const formData = new FormData();
                 selectedFiles.forEach((file) => formData.append("files", file));
+
                 fields.forEach((field, index) => {
                     formData.append(`field${index + 1}`, field.value.trim());
                 });
 
                 try {
                     const xhr = new XMLHttpRequest();
+
                     xhr.upload.addEventListener("progress", (e) => {
                         if (e.lengthComputable) {
                             const percentComplete = Math.round(
@@ -1206,11 +1232,26 @@
                             );
                             progressBar.style.width = percentComplete + "%";
                             progressText.textContent = percentComplete + "%";
+
                             if (percentComplete < 100) {
-                                progressInfo.textContent = `Envoi des fichiers... (${formatFileSize(e.loaded)} / ${formatFileSize(e.total)})`;
+                                progressInfo.textContent = `📤 Envoi des fichiers... (${formatFileSize(e.loaded)} / ${formatFileSize(e.total)})`;
                             } else {
-                                progressInfo.textContent =
-                                    "Finalisation sur Dropbox...";
+                                // Affichage après 100% - traitement serveur
+                                progressBar.style.width = "100%";
+                                progressText.textContent = "";
+                                progressBar.classList.add("animate-pulse");
+                                progressInfo.innerHTML = `
+                                    <div class="flex items-center justify-center space-x-3">
+                                        <svg class="animate-spin h-6 w-6 text-indigo-600" viewBox="0 0 24 24">
+                                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none"/>
+                                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
+                                        </svg>
+                                        <div class="text-left">
+                                            <p class="font-semibold text-indigo-700">📦 Traitement en cours sur le serveur...</p>
+                                            <p class="text-sm text-gray-600 mt-1">Création de l'archive et envoi vers Dropbox. Cela peut prendre plusieurs minutes pour les gros fichiers. Merci de patienter.</p>
+                                        </div>
+                                    </div>
+                                `;
                             }
                         }
                     });
@@ -1225,17 +1266,41 @@
                         };
                         xhr.onerror = () =>
                             reject(new Error("Erreur de connexion"));
+                        xhr.ontimeout = () =>
+                            reject(
+                                new Error(
+                                    "Timeout - Le serveur met trop de temps à répondre",
+                                ),
+                            );
                     });
 
                     xhr.open("POST", `${API_URL}/upload`);
                     xhr.timeout = 600000; // 10 minutes timeout
                     xhr.send(formData);
+
                     const data = await uploadPromise;
 
+                    // Réactiver la fermeture de page
+                    window.onbeforeunload = null;
+
                     if (data.success) {
+                        progressBar.classList.remove("animate-pulse");
                         progressBar.style.width = "100%";
                         progressText.textContent = "✓";
-                        progressInfo.textContent = "✅ Transfert terminé !";
+                        progressBar.classList.remove(
+                            "from-indigo-500",
+                            "to-purple-600",
+                        );
+                        progressBar.classList.add("bg-green-500");
+                        progressInfo.innerHTML = `
+                            <div class="flex items-center justify-center space-x-2 text-green-700">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                </svg>
+                                <span class="font-semibold">✅ Transfert terminé avec succès !</span>
+                            </div>
+                        `;
+
                         setTimeout(() => {
                             const params = new URLSearchParams({
                                 archive: data.archiveName,
@@ -1243,38 +1308,65 @@
                                 size: data.totalSize,
                             });
                             window.location.href = `/success.html?${params.toString()}`;
-                        }, 1000);
+                        }, 1500);
                     } else {
+                        window.onbeforeunload = null;
                         progressContainer.classList.add("hidden");
                         uploadStatus.classList.remove("hidden");
                         uploadStatus.innerHTML = `
-                            <div class="flex items-center space-x-3 p-3 rounded-lg bg-red-50">
-                                <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                                <div class="flex-1">
-                                    <p class="text-sm font-medium text-gray-800">Erreur</p>
-                                    <p class="text-xs text-red-600">${data.message || "Erreur lors du transfert"}</p>
-                                </div>
+                        <div class="flex items-center space-x-3 p-3 rounded-lg bg-red-50">
+                            <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                            <div class="flex-1">
+                                <p class="text-sm font-medium text-gray-800">Erreur</p>
+                                <p class="text-xs text-red-600">${data.message || "Erreur lors du transfert"}</p>
                             </div>
-                        `;
+                        </div>
+                    `;
                         isUploading = false;
                         uploadBtn.disabled = false;
                         updateFileList();
                     }
                 } catch (error) {
+                    window.onbeforeunload = null;
                     progressContainer.classList.add("hidden");
                     uploadStatus.classList.remove("hidden");
+
+                    let errorMessage =
+                        "Impossible de se connecter au serveur. Vérifiez que le backend est démarré.";
+                    if (error.message.includes("Timeout")) {
+                        errorMessage =
+                            "Le serveur met trop de temps à répondre. Vos fichiers sont peut-être trop volumineux pour le plan gratuit. Essayez avec des fichiers plus petits ou contactez l'administrateur.";
+                    }
+
                     uploadStatus.innerHTML = `
                         <div class="flex items-center space-x-3 p-3 rounded-lg bg-red-50">
                             <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                             <div class="flex-1">
                                 <p class="text-sm font-medium text-gray-800">Erreur de connexion</p>
-                                <p class="text-xs text-red-600">Impossible de se connecter au serveur. Vérifiez que le backend est démarré.</p>
+                                <p class="text-xs text-red-600">${errorMessage}</p>
                             </div>
                         </div>
                     `;
                     isUploading = false;
                     uploadBtn.disabled = false;
                     updateFileList();
+                }
+            }
+
+            async function testConnection() {
+                try {
+                    const response = await fetch(`${API_URL}/test-connection`);
+                    const data = await response.json();
+                    alert(
+                        data.success
+                            ? "✅ Connexion à Dropbox réussie !\n" +
+                                  data.message
+                            : "❌ " + data.message,
+                    );
+                } catch (error) {
+                    alert(
+                        "❌ Erreur: Impossible de se connecter au serveur backend",
+                    );
                 }
             }
 
